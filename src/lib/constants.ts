@@ -14,7 +14,7 @@ export const SITE = {
   name: 'Wheels2Wages',
   domain: 'wheels2wages.com',
   url: 'https://wheels2wages.com',
-  email: 'alexa.smith@wheels2wages.com',
+  email: 'oliviabrook@wheels2wages.com',
   tagline: 'Driver & Delivery Jobs Near You',
 };
 
