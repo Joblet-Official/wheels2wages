@@ -487,28 +487,26 @@
   letter-spacing: -0.04em;
 }
 
-/* One structured process container instead of three separately-shadowed
-   floating cards — each step is a divided row inside one shared surface. */
+/* No boxed container at all — steps 01 and 03 are just text, chips, a
+   checklist and a button, which read fine directly on the section's own
+   navy (matching the eyebrow/heading above them) without a white card
+   behind them. Step 02 keeps its own light sub-surfaces (search box,
+   location board) because that's the one piece that genuinely needs a
+   light background — a text input and result rows are the only content
+   here that a white card was ever actually serving. */
 .w2w-process-panel {
-  padding: 0 clamp(20px, 2.5vw, 32px);
-  /* A soft, cool tint rather than flat white — against the navy section
-     background, solid white read as one oversized blank slab; the tint
-     keeps it a distinct light surface without the glare. */
-  background: var(--w2w-canvas);
-  border: 1px solid var(--w2w-border);
-  border-radius: 16px;
-  box-shadow: 0 24px 48px -28px rgba(3, 10, 24, 0.35);
+  padding: 0;
 }
 
 .w2w-process-step {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr);
   gap: 20px;
-  padding: clamp(22px, 3vw, 30px) 0;
+  padding: clamp(26px, 3vw, 34px) 0;
 }
 
 .w2w-process-step + .w2w-process-step {
-  border-top: 1px solid var(--w2w-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .w2w-process-step__num {
@@ -526,7 +524,7 @@
 
 .w2w-process-step__body h3 {
   margin: 0;
-  color: var(--w2w-text);
+  color: #ffffff;
   font-size: clamp(1.4rem, 2vw, 1.9rem);
   font-weight: 700;
   line-height: 1.1;
@@ -536,7 +534,7 @@
 .w2w-process-step__body p {
   max-width: 460px;
   margin: 10px 0 0;
-  color: var(--w2w-text-muted);
+  color: rgba(239, 246, 255, 0.72);
   font-size: 0.95rem;
   line-height: 1.58;
 }
@@ -554,9 +552,9 @@
   align-items: center;
   gap: 7px;
   padding: 0 13px;
-  color: var(--w2w-blue-hover);
-  background: var(--w2w-canvas);
-  border: 1px solid var(--w2w-border);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -566,8 +564,8 @@
 
 .w2w-route-card__chips a:hover,
 .w2w-route-card__chips a:focus-visible {
-  color: #ffffff;
-  background: var(--w2w-blue);
+  color: var(--w2w-navy);
+  background: #ffffff;
   outline: none;
   transform: translateY(-2px);
 }
@@ -584,7 +582,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--w2w-text);
+  color: rgba(239, 246, 255, 0.86);
   font-size: 0.9rem;
   font-weight: 500;
 }
@@ -592,7 +590,7 @@
 .w2w-process-step__body li svg {
   width: 17px;
   height: 17px;
-  color: var(--w2w-blue);
+  color: var(--w2w-route);
 }
 
 .w2w-route-card__cta {
@@ -602,8 +600,8 @@
   gap: 10px;
   margin-top: 22px;
   padding: 0 18px;
-  color: #ffffff;
-  background: var(--w2w-navy);
+  color: var(--w2w-navy);
+  background: #ffffff;
   border-radius: 12px;
   font-size: 0.85rem;
   font-weight: 650;
@@ -613,6 +611,7 @@
 
 .w2w-route-card__cta:hover,
 .w2w-route-card__cta:focus-visible {
+  color: #ffffff;
   background: var(--w2w-blue);
   outline: none;
   transform: translateY(-2px);
@@ -641,10 +640,6 @@
   .w2w-route-board__intro h2 {
     font-size: clamp(2.3rem, 8.5vw, 3.1rem);
     line-height: 1.05;
-  }
-
-  .w2w-process-panel {
-    border-radius: 12px;
   }
 
   .w2w-route-board__visual {
