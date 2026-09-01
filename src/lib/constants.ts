@@ -197,13 +197,16 @@ export const CATEGORIES = [
 ] as const;
 
 // Broad, non-wheels2wages-scoped Joblet searches for the 5 job categories.
-// Not currently rendered by any component — kept as verified real data for
-// whenever category buttons are added back. Verified against Joblet's own
-// search UI — it generates plain `keyword=<term>` for these same searches,
-// since no dedicated driver/delivery/CDL/courier/gig taxonomy exists in
-// Joblet's source. Deliberately separate from buildJobsUrl/JOBS_URL, which
-// stays scoped to Wheels2Wages' own branded postings (the footer's role
-// links, city links) — these two must not be merged.
+// Powers every category link on the site (Hero category pills and quick
+// links, the "Choose your lane"/"Match roles to cities" chips, Footer's
+// "Find your lane" links) — this is what makes clicking "Delivery" open
+// every Delivery job on Joblet, not just Wheels2Wages' own postings.
+// Verified against Joblet's own search UI — it generates plain
+// `keyword=<term>` for these same searches, since no dedicated
+// driver/delivery/CDL/courier/gig taxonomy exists in Joblet's source.
+// Deliberately separate from buildJobsUrl/JOBS_URL, which stays scoped to
+// Wheels2Wages' own branded postings (the footer's role links, city
+// links) — these two must not be merged.
 export const CATEGORY_SEARCH_URLS: Record<(typeof CATEGORIES)[number]['param'], string> = {
   driver: 'https://joblet.ai/jobs?keyword=Driver',
   delivery: 'https://joblet.ai/jobs?keyword=Delivery',
@@ -225,14 +228,14 @@ const JOBLET_SEARCH_URL = 'https://joblet.ai/jobs';
 
 /**
  * Build a broad (non-wheels2wages-scoped) Joblet search URL, composing
- * category + location together. Not currently called by any component —
- * kept as verified real logic for whenever a broader job-search form is
- * added back. Reuses CATEGORY_SEARCH_URLS as the keyword source (so the
- * keyword term never drifts out of sync with the 5 categories) and layers
- * `location` on top independently. Deliberately separate from
- * buildJobsUrl/JOBS_URL, which stay reserved for Wheels2Wages' own branded
- * postings (the footer's role links, city links) — these two must not be
- * merged.
+ * category + location together. Used by the "Match roles to cities"
+ * location results in WheelsHomeStory.tsx, so each city link opens that
+ * exact role + location search on Joblet. Reuses CATEGORY_SEARCH_URLS as
+ * the keyword source (so the keyword term never drifts out of sync with
+ * the 5 categories) and layers `location` on top independently.
+ * Deliberately separate from buildJobsUrl/JOBS_URL, which stay reserved
+ * for Wheels2Wages' own branded postings (the footer's role links, city
+ * links) — these two must not be merged.
  */
 export function buildJobletSearchUrl(extra?: {
   category?: (typeof CATEGORIES)[number]['param'];
