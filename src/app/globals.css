@@ -10,14 +10,22 @@
   }
   body {
     @apply bg-white text-ink-900 font-sans;
+    overflow-x: clip;
   }
   ::selection {
-    background-color: #7F1D2E;
+    background-color: #1D4ED8;
     color: #fff;
   }
-  /* Anchor scroll offset for sticky navbar */
+  /* Anchor scroll offset for the fixed navbar — 64px header + margin on
+     mobile, 84px header + margin from md up (matches Navbar.tsx's own
+     h-16/md:h-[84px] breakpoint exactly). */
   section[id] {
-    scroll-margin-top: 88px;
+    scroll-margin-top: 76px;
+  }
+  @media (min-width: 768px) {
+    section[id] {
+      scroll-margin-top: 96px;
+    }
   }
 }
 
@@ -45,3 +53,124 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #D9DAE0; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #B7B9C3; }
+
+/* Context-aware mobile sticky CTA (StickyMobileCTA.tsx). Hidden by default;
+   JS flips data-visible once past the Hero and clear of the FAQ/closing/
+   footer zone. No gradient curtain, no animation loop — a plain fade plus
+   an 8px rise, respecting the iOS home-indicator safe area. */
+.w2w-sticky-cta {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  left: 16px;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.w2w-sticky-cta[data-visible='true'] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.w2w-sticky-cta a {
+  display: flex;
+  min-height: 52px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  background: #1d4ed8;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px -8px rgba(29, 78, 216, 0.5);
+}
+
+.w2w-sticky-cta a:active {
+  background: #1e40af;
+}
+
+.w2w-sticky-cta svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w2w-sticky-cta {
+    transition: opacity 120ms linear;
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .w2w-sticky-cta {
+    display: none;
+  }
+}
+
+/* Mobile navigation drawer (Navbar.tsx). A dedicated light-surface overlay
+   — not the dark Footer's palette reused — so it reads as "the site's
+   menu" rather than "Footer content pushed under the header". */
+.w2w-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: rgba(10, 17, 31, 0.44);
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+
+.w2w-nav-drawer {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  left: 0;
+  z-index: 46;
+  display: flex;
+  max-height: calc(100dvh - 64px - env(safe-area-inset-bottom));
+  flex-direction: column;
+  overflow-y: auto;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeef1;
+  box-shadow: 0 24px 48px -24px rgba(10, 17, 31, 0.3);
+}
+
+.w2w-nav-drawer__links {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 8px 20px 0;
+  list-style: none;
+}
+
+.w2w-nav-drawer__links li + li {
+  border-top: 1px solid #eeeef1;
+}
+
+.w2w-nav-drawer__links a {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  color: #0a0a0b;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.w2w-nav-drawer__links a span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  color: #2563eb;
+}
+
+.w2w-nav-drawer__cta {
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+}
