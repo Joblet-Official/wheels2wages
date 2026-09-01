@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Centralized design tokens. Every custom (non-Tailwind) `.w2w-*` stylesheet
+   in this project (HeroRedesign.css, WheelsHomeStory.css, Footer.css)
+   should reference these rather than hardcoding hex — one navy, one brand
+   blue, one border, one muted text color, used deliberately instead of
+   scattered near-duplicate shades. --w2w-blue/-blue-hover match the real
+   logo color (Logo.tsx / tailwind electric-600/700) rather than introducing
+   a new, slightly different brand blue. */
+:root {
+  --w2w-navy: #071a38;
+  /* A deliberately darker shade for the Footer specifically — the last,
+     deepest step in the section rhythm (Hero/HowItWorks/FAQ share
+     --w2w-navy; the Footer is a shade darker still). */
+  --w2w-navy-deep: #041632;
+  --w2w-blue: #2563eb;
+  --w2w-blue-hover: #1d4ed8;
+  --w2w-canvas: #f4f6f8;
+  --w2w-surface: #ffffff;
+  --w2w-text: #111827;
+  --w2w-text-muted: #667085;
+  --w2w-border: #d8e1ec;
+  --w2w-route: #8ccbff;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -10,14 +33,22 @@
   }
   body {
     @apply bg-white text-ink-900 font-sans;
+    overflow-x: clip;
   }
   ::selection {
-    background-color: #7F1D2E;
+    background-color: #1D4ED8;
     color: #fff;
   }
-  /* Anchor scroll offset for sticky navbar */
+  /* Anchor scroll offset for the fixed navbar — 64px header + margin on
+     mobile, 84px header + margin from md up (matches Navbar.tsx's own
+     h-16/md:h-[84px] breakpoint exactly). */
   section[id] {
-    scroll-margin-top: 88px;
+    scroll-margin-top: 76px;
+  }
+  @media (min-width: 768px) {
+    section[id] {
+      scroll-margin-top: 96px;
+    }
   }
 }
 
@@ -45,3 +76,110 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #D9DAE0; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #B7B9C3; }
+
+/* In-flow "Find Jobs Near You" CTA (StickyMobileCTA.tsx / FindJobsCta) —
+   a normal block mounted after the process/location content, not a
+   viewport-fixed overlay. No gradient curtain, no animation, no opacity
+   toggling: it's just a regular part of the page, so it can never cover
+   the FAQ, the closing CTA, or the Footer. Desktop keeps this hidden,
+   matching its previous (fixed-bar) behavior there. */
+.w2w-inline-cta {
+  padding: 28px 20px calc(28px + env(safe-area-inset-bottom));
+  background: var(--w2w-canvas);
+}
+
+.w2w-inline-cta a {
+  display: flex;
+  min-height: 52px;
+  width: 100%;
+  max-width: 420px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 650;
+  text-decoration: none;
+  background: var(--w2w-blue);
+  border-radius: 12px;
+  transition: background 160ms ease;
+}
+
+.w2w-inline-cta a:hover,
+.w2w-inline-cta a:focus-visible {
+  background: var(--w2w-blue-hover);
+  outline: none;
+}
+
+.w2w-inline-cta svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (min-width: 768px) {
+  .w2w-inline-cta {
+    display: none;
+  }
+}
+
+/* Mobile navigation drawer (Navbar.tsx). A dedicated light-surface overlay
+   — not the dark Footer's palette reused — so it reads as "the site's
+   menu" rather than "Footer content pushed under the header". */
+.w2w-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: rgba(10, 17, 31, 0.44);
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+
+.w2w-nav-drawer {
+  position: fixed;
+  top: 64px;
+  right: 0;
+  left: 0;
+  z-index: 46;
+  display: flex;
+  max-height: calc(100dvh - 64px - env(safe-area-inset-bottom));
+  flex-direction: column;
+  overflow-y: auto;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeef1;
+  box-shadow: 0 24px 48px -24px rgba(10, 17, 31, 0.3);
+}
+
+.w2w-nav-drawer__links {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 8px 20px 0;
+  list-style: none;
+}
+
+.w2w-nav-drawer__links li + li {
+  border-top: 1px solid #eeeef1;
+}
+
+.w2w-nav-drawer__links a {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  color: #0a0a0b;
+  font-size: 17px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.w2w-nav-drawer__links a span {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  color: #2563eb;
+}
+
+.w2w-nav-drawer__cta {
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+}

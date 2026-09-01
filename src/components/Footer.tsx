@@ -1,130 +1,86 @@
+import { ArrowUpRight, Mail } from 'lucide-react';
 import { Logo } from './Logo';
-import { Container } from './Section';
-import { CITIES, SITE, buildJobsUrl } from '@/lib/constants';
+import { BROWSE_JOBS_URL, CATEGORY_SEARCH_URLS, CITIES, SITE, buildJobsUrl } from '@/lib/constants';
+import './Footer.css';
 
-const quickLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'FAQ', href: '#faq' },
+const roleLinks = [
+  { label: 'Driver jobs', category: 'driver' },
+  { label: 'Delivery jobs', category: 'delivery' },
+  { label: 'CDL jobs', category: 'cdl' },
+  { label: 'Courier jobs', category: 'courier' },
+  { label: 'Flexible gig work', category: 'gig' },
+] as const;
+
+const pageLinks = [
+  { label: 'Browse jobs', href: '#jobs' },
+  { label: 'How it works', href: '#how-it-works' },
+  { label: 'Questions', href: '#faq' },
   { label: 'Contact', href: '#contact' },
-];
-
-const legalLinks = [
-  { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Terms & Conditions', href: '/terms' },
-];
-
-// SEO-friendly city/category combinations for footer
-const seoLinks = [
-  { label: 'Driver Jobs in Atlanta', city: 'Atlanta', cat: 'driver' },
-  { label: 'Delivery Jobs in Houston', city: 'Houston', cat: 'delivery' },
-  { label: 'CDL Jobs in San Diego', city: 'San Diego', cat: 'cdl' },
-  { label: 'Courier Jobs in Memphis', city: 'Memphis', cat: 'courier' },
-  { label: 'Gig Work in San Francisco', city: 'San Francisco', cat: 'gig' },
-  { label: 'Delivery Jobs in Baltimore', city: 'Baltimore', cat: 'delivery' },
 ];
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink-900 text-white pt-16 pb-10 mt-8">
-      <Container size="wide">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-4">
-            <div className="brightness-0 invert opacity-95">
-              <Logo />
-            </div>
-            <p className="mt-4 text-sm text-white/60 max-w-xs leading-relaxed">
-              {SITE.tagline}. Across major US cities. Free for applicants, always.
-            </p>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="mt-4 inline-block text-sm text-white/75 hover:text-white"
-            >
-              {SITE.email}
-            </a>
+    <footer className="w2w-site-footer" id="contact">
+      <div className="w2w-site-footer__shell">
+        <div className="w2w-site-footer__top">
+          <div className="w2w-site-footer__brand">
+            <div><Logo /></div>
+            <p>Driver and delivery opportunities organized around the work you want and the places you know.</p>
           </div>
 
-          {/* Quick links */}
-          <div className="md:col-span-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50">
-              Wheels2Wages
-            </h3>
-            <ul className="mt-4 space-y-2.5">
-              {quickLinks.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="text-sm text-white/75 hover:text-white">
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <a className="w2w-site-footer__contact" href={`mailto:${SITE.email}`}>
+            <Mail aria-hidden />
+            <span>
+              <small>Need help finding the right route?</small>
+              <strong>{SITE.email}</strong>
+            </span>
+            <ArrowUpRight aria-hidden />
+          </a>
+        </div>
 
-          {/* Popular cities */}
-          <div className="md:col-span-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50">
-              Cities
-            </h3>
-            <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2.5">
-              {CITIES.slice(0, 8).map((c) => (
-                <li key={c}>
-                  <a
-                    href={buildJobsUrl({ location: c })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cta={`footer_city_${c.toLowerCase().replace(/[^a-z]/g, '_')}`}
-                    className="text-sm text-white/75 hover:text-white"
-                  >
-                    {c}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="w2w-site-footer__statement">
+          <h2>Work that moves<br />with your life.</h2>
+          <a href={BROWSE_JOBS_URL} target="_blank" rel="noopener noreferrer">
+            Browse open jobs <ArrowUpRight aria-hidden />
+          </a>
+        </div>
 
-          {/* SEO links */}
-          <div className="md:col-span-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50">
-              Top searches
-            </h3>
-            <ul className="mt-4 space-y-2.5">
-              {seoLinks.slice(0, 5).map((l) => (
-                <li key={l.label}>
-                  <a
-                    href={buildJobsUrl({ location: l.city, category: l.cat })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-cta={`footer_seo_${l.label.toLowerCase().replace(/\s+/g, '_')}`}
-                    className="text-sm text-white/75 hover:text-white"
-                  >
-                    {l.label}
-                  </a>
-                </li>
+        <div className="w2w-site-footer__links">
+          <div>
+            <span>Explore</span>
+            <nav aria-label="Footer navigation">
+              {pageLinks.map((link) => <a href={link.href} key={link.href}>{link.label}</a>)}
+            </nav>
+          </div>
+          <div>
+            <span>Find your lane</span>
+            <nav aria-label="Job categories">
+              {roleLinks.map((role) => (
+                <a href={CATEGORY_SEARCH_URLS[role.category]} key={role.category}>{role.label}</a>
               ))}
-            </ul>
+            </nav>
+          </div>
+          <div>
+            <span>Popular cities</span>
+            <nav aria-label="Popular job locations">
+              {CITIES.slice(0, 6).map((city) => (
+                <a href={buildJobsUrl({ location: city.value })} key={city.value}>{city.label}</a>
+              ))}
+            </nav>
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-white/10">
-          <p className="text-xs text-white/50">
-            Wheels2Wages does not charge applicants any fees or commissions. Drivers keep 100% of earnings from the platform they join.
-          </p>
-          <div className="mt-4 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-xs text-white/40">© {year} Wheels2Wages. All rights reserved.</p>
-            <ul className="flex gap-5">
-              {legalLinks.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="text-xs text-white/60 hover:text-white">
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="w2w-site-footer__bottom">
+          <p>© {year} Wheels2Wages. Free for applicants. No fees or commissions.</p>
+          <a className="w2w-site-footer__powered" href="https://joblet.ai" target="_blank" rel="noopener noreferrer" aria-label="Powered by joblet.ai">
+            <span>Powered by</span>
+            <img src="/joblet-mark-icon.png" alt="" aria-hidden />
+            <strong>joblet.ai</strong>
+          </a>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }

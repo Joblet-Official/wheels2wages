@@ -1,21 +1,23 @@
 import { ArrowRight } from 'lucide-react';
-import { JOBS_URL } from '@/lib/constants';
+import { BROWSE_JOBS_URL } from '@/lib/constants';
 
-export function StickyMobileCTA() {
+// Below `lg` this renders as a normal, in-flow block (mounted inside
+// WheelsHomeStory, right after the process/location content) rather than a
+// viewport-fixed overlay — a fixed bar at this position was covering
+// location rows, FAQ content, and the Footer. Same label, destination, and
+// tracking attribute as before; only the positioning model changed.
+// Desktop already never showed this (hidden ≥768px), so that's unchanged.
+export function FindJobsCta() {
   return (
-    <div
-      className="md:hidden fixed inset-x-0 bottom-0 z-40 p-3 bg-gradient-to-t from-white via-white/95 to-white/0 pointer-events-none"
-      aria-hidden={false}
-    >
+    <div className="w2w-inline-cta">
       <a
-        href={JOBS_URL}
+        href={BROWSE_JOBS_URL}
         target="_blank"
         rel="noopener noreferrer"
         data-cta="mobile_sticky_find_jobs"
-        className="pointer-events-auto flex h-14 w-full items-center justify-center gap-2 rounded-full bg-electric-700 text-white font-semibold shadow-glow active:bg-electric-800 transition"
       >
         Find Jobs Near You
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight aria-hidden />
       </a>
     </div>
   );

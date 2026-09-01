@@ -22,6 +22,9 @@ const config: Config = {
           900: '#0A0A0B',
           DEFAULT: '#0A0A0B',
         },
+        // Primary brand blue — the color that actually exists in the
+        // Wheels2Wages logo mark (Logo.tsx / public/icon.svg). Stays the
+        // one color every CTA/primary action uses.
         electric: {
           50: '#EFF4FF',
           100: '#DBE6FF',
@@ -30,41 +33,74 @@ const config: Config = {
           400: '#5786FF',
           500: '#2E61F0',
           600: '#2563EB', // primary
-          700: '#1D4ED8',
+          700: '#1D4ED8', // logo mark color
           800: '#1E40AF',
           900: '#1E3A8A',
           DEFAULT: '#2563EB',
         },
+        // Genuinely navy — real, visible blue saturation, not a near-black
+        // with a faint blue tint (the first pass read as plain black on a
+        // real screen). Distinct from neutral ink-900. Used for
+        // high-contrast section surfaces (dark CTA, footer, the Categories
+        // section) rather than as a text color.
+        navy: {
+          50: '#EFF3FA',
+          100: '#DCE5F5',
+          300: '#7B94C4',
+          500: '#2A4A85',
+          700: '#1A3563',
+          800: '#13294F',
+          900: '#0F1E3E',
+          950: '#0A1730',
+          DEFAULT: '#0F1E3E',
+        },
+        // Soft sky/cyan — route lines, motion accents, decorative dots.
+        // Deliberately distinct from electric so route/motion details read
+        // as a different, lighter signal than primary CTAs.
+        route: {
+          50: '#EFFAFE',
+          100: '#DCF3FD',
+          200: '#B9E9FB',
+          300: '#A8E6FB',
+          400: '#5FD3F2',
+          500: '#22B8E0',
+          DEFAULT: '#5FD3F2',
+        },
+        // Restrained warm accent — small highlights only (a marker, a label
+        // underline). Never used on a primary button, so it never competes
+        // with the electric-blue CTA.
+        amber: {
+          50: '#FEF6EB',
+          100: '#FDEACE',
+          200: '#FBDCA8',
+          300: '#FCD9A0',
+          400: '#F5B85C',
+          500: '#EE9A2E',
+          600: '#C97914',
+          DEFAULT: '#F5B85C',
+        },
+        // joblet.ai's real brand red — live-sampled from joblet.ai (primary
+        // button/link color #962727, darker states #882222/#7A1F1F). Used
+        // only where the page explicitly names or links to Joblet (the
+        // "opens on Joblet" note, the footer's "Listings powered by
+        // joblet.ai" credit) — never applied to Wheels2Wages' own primary
+        // electric-blue CTAs or section surfaces.
+        joblet: {
+          50: '#FBF1EE',
+          100: '#F5DDD6',
+          200: '#E9B8AE',
+          300: '#D98C82',
+          400: '#B94A3F',
+          500: '#962727',
+          600: '#882222',
+          700: '#7A1F1F',
+          800: '#5C1717',
+          900: '#3D0F0F',
+          DEFAULT: '#962727',
+        },
       },
       letterSpacing: {
-        display: '-0.04em',
-      },
-      boxShadow: {
-        card: '0 1px 2px rgba(10,10,11,0.04), 0 8px 24px -8px rgba(10,10,11,0.08)',
-        'card-lg': '0 4px 8px rgba(10,10,11,0.04), 0 24px 56px -16px rgba(10,10,11,0.16)',
-        glow: '0 10px 32px -8px rgba(37,99,235,0.45)',
-        'glow-soft': '0 8px 24px -8px rgba(37,99,235,0.25)',
-      },
-      backgroundImage: {
-        'grid-fade':
-          'linear-gradient(to bottom, rgba(37,99,235,0.06), transparent 70%), radial-gradient(circle at 1px 1px, rgba(10,10,11,0.08) 1px, transparent 0)',
-        'hero-glow':
-          'radial-gradient(ellipse at top, rgba(37,99,235,0.10), transparent 60%)',
-      },
-      backgroundSize: {
-        grid: '24px 24px',
-      },
-      keyframes: {
-        floatSlow: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
-        floatFast: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
-        marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
-        spinSlow: { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } },
-      },
-      animation: {
-        'float-slow': 'floatSlow 6s ease-in-out infinite',
-        'float-fast': 'floatFast 4.5s ease-in-out infinite',
-        marquee: 'marquee 40s linear infinite',
-        'spin-slow': 'spinSlow 18s linear infinite',
+        display: '-0.03em',
       },
     },
   },
