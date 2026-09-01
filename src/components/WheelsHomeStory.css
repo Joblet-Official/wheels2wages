@@ -490,17 +490,21 @@
 /* One structured process container instead of three separately-shadowed
    floating cards — each step is a divided row inside one shared surface. */
 .w2w-process-panel {
-  padding: 0 clamp(22px, 2.5vw, 32px);
-  background: var(--w2w-surface);
+  padding: 0 clamp(20px, 2.5vw, 32px);
+  /* A soft, cool tint rather than flat white — against the navy section
+     background, solid white read as one oversized blank slab; the tint
+     keeps it a distinct light surface without the glare. */
+  background: var(--w2w-canvas);
   border: 1px solid var(--w2w-border);
   border-radius: 16px;
+  box-shadow: 0 24px 48px -28px rgba(3, 10, 24, 0.35);
 }
 
 .w2w-process-step {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr);
   gap: 20px;
-  padding: clamp(26px, 3vw, 34px) 0;
+  padding: clamp(22px, 3vw, 30px) 0;
 }
 
 .w2w-process-step + .w2w-process-step {
@@ -668,7 +672,7 @@
   min-height: 48px;
   margin-top: 20px;
   padding: 0 14px;
-  background: var(--w2w-canvas);
+  background: var(--w2w-surface);
   border: 1px solid var(--w2w-border);
   border-radius: 10px;
 }
