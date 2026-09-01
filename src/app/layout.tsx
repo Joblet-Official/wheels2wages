@@ -4,7 +4,6 @@ import { GeistMono } from 'geist/font/mono';
 import { MotionConfig } from 'framer-motion';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { StickyMobileCTA } from '@/components/StickyMobileCTA';
 import { StructuredData } from '@/components/StructuredData';
 import { SITE } from '@/lib/constants';
 import './globals.css';
@@ -80,7 +79,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main id="main">{children}</main>
           <Footer />
-          <StickyMobileCTA />
         </MotionConfig>
       </body>
     </html>

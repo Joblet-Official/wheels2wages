@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Centralized design tokens. Every custom (non-Tailwind) `.w2w-*` stylesheet
+   in this project (HeroRedesign.css, WheelsHomeStory.css, Footer.css)
+   should reference these rather than hardcoding hex — one navy, one brand
+   blue, one border, one muted text color, used deliberately instead of
+   scattered near-duplicate shades. --w2w-blue/-blue-hover match the real
+   logo color (Logo.tsx / tailwind electric-600/700) rather than introducing
+   a new, slightly different brand blue. */
+:root {
+  --w2w-navy: #071a38;
+  /* A deliberately darker shade for the Footer specifically — the last,
+     deepest step in the section rhythm (Hero/HowItWorks/FAQ share
+     --w2w-navy; the Footer is a shade darker still). */
+  --w2w-navy-deep: #041632;
+  --w2w-blue: #2563eb;
+  --w2w-blue-hover: #1d4ed8;
+  --w2w-canvas: #f4f6f8;
+  --w2w-surface: #ffffff;
+  --w2w-text: #111827;
+  --w2w-text-muted: #667085;
+  --w2w-border: #d8e1ec;
+  --w2w-route: #8ccbff;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -54,62 +77,48 @@
 ::-webkit-scrollbar-thumb { background: #D9DAE0; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #B7B9C3; }
 
-/* Context-aware mobile sticky CTA (StickyMobileCTA.tsx). Hidden by default;
-   JS flips data-visible once past the Hero and clear of the FAQ/closing/
-   footer zone. No gradient curtain, no animation loop — a plain fade plus
-   an 8px rise, respecting the iOS home-indicator safe area. */
-.w2w-sticky-cta {
-  position: fixed;
-  right: 16px;
-  bottom: calc(16px + env(safe-area-inset-bottom));
-  left: 16px;
-  z-index: 40;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 200ms ease, transform 200ms ease;
+/* In-flow "Find Jobs Near You" CTA (StickyMobileCTA.tsx / FindJobsCta) —
+   a normal block mounted after the process/location content, not a
+   viewport-fixed overlay. No gradient curtain, no animation, no opacity
+   toggling: it's just a regular part of the page, so it can never cover
+   the FAQ, the closing CTA, or the Footer. Desktop keeps this hidden,
+   matching its previous (fixed-bar) behavior there. */
+.w2w-inline-cta {
+  padding: 28px 20px calc(28px + env(safe-area-inset-bottom));
+  background: var(--w2w-canvas);
 }
 
-.w2w-sticky-cta[data-visible='true'] {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.w2w-sticky-cta a {
+.w2w-inline-cta a {
   display: flex;
   min-height: 52px;
   width: 100%;
+  max-width: 420px;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin: 0 auto;
   color: #ffffff;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 650;
   text-decoration: none;
-  background: #1d4ed8;
-  border-radius: 999px;
-  box-shadow: 0 8px 24px -8px rgba(29, 78, 216, 0.5);
+  background: var(--w2w-blue);
+  border-radius: 12px;
+  transition: background 160ms ease;
 }
 
-.w2w-sticky-cta a:active {
-  background: #1e40af;
+.w2w-inline-cta a:hover,
+.w2w-inline-cta a:focus-visible {
+  background: var(--w2w-blue-hover);
+  outline: none;
 }
 
-.w2w-sticky-cta svg {
+.w2w-inline-cta svg {
   width: 16px;
   height: 16px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .w2w-sticky-cta {
-    transition: opacity 120ms linear;
-    transform: none;
-  }
-}
-
 @media (min-width: 768px) {
-  .w2w-sticky-cta {
+  .w2w-inline-cta {
     display: none;
   }
 }

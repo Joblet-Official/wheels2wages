@@ -8,8 +8,9 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import { ArrowUpRight, Car, Check, MapPin, Search } from 'lucide-react';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BROWSE_JOBS_URL, buildJobletSearchUrl, CATEGORY_SEARCH_URLS, CITIES, FAQS } from '@/lib/constants';
+import { FindJobsCta } from './StickyMobileCTA';
 import './WheelsHomeStory.css';
 
 const roles = [
@@ -20,62 +21,16 @@ const roles = [
   { label: 'Gig work', category: 'gig' },
 ] as const;
 
-// Below this width, every section renders in its resting state immediately
-// instead of fading/rising in on scroll — on real mobile data this staged
-// reveal is where "vibe-coded" shows up as visible lag, not just polish.
-// Desktop keeps the full effect.
-const MOBILE_QUERY = '(max-width: 640px)';
-
 // SSR-safety: `mounted` starts false on both the server and the very first
 // client render (so hydration never mismatches what the server sent), then
 // flips true a tick later. Framer Motion bakes `initial` values into
-// server-rendered HTML as inline styles — without gating on this, every
-// Reveal-wrapped section (and the FAQ's default-open answer) would render
-// invisible in raw SSR output and stay that way permanently if the client
-// bundle never loads.
+// server-rendered HTML as inline styles — without gating on this, the FAQ's
+// default-open answer would render invisible in raw SSR output and stay
+// that way permanently if the client bundle never loads.
 function useMounted() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return mounted;
-}
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
-  }, []);
-  return isMobile;
-}
-
-function Reveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const reduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const mounted = useMounted();
-  const skip = !mounted || reduceMotion || isMobile;
-
-  return (
-    <motion.div
-      className={className}
-      initial={skip ? false : { opacity: 0, y: 34 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.82, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
 }
 
 const DEFAULT_VISIBLE_LOCATIONS = 6;
@@ -103,17 +58,17 @@ function RouteJourney() {
       aria-labelledby="route-story-title"
     >
       <div className="w2w-story-shell">
-        <Reveal className="w2w-route-board__intro">
+        <div className="w2w-route-board__intro">
           <span className="w2w-story-kicker">How it works</span>
           <h2 id="route-story-title">Your route to paid driving work.</h2>
           <p>
             No slide deck, no maze. Start with the kind of work you want,
             choose the area that fits your day, and move straight into applying.
           </p>
-        </Reveal>
+        </div>
 
         <div className="w2w-route-board__grid">
-          <Reveal className="w2w-route-board__visual" delay={0.06}>
+          <div className="w2w-route-board__visual">
             <Image
               src="/journey-van.jpg"
               alt="Delivery van moving along a tree-lined road"
@@ -124,102 +79,114 @@ function RouteJourney() {
               <span>Live route</span>
               <strong>Driver and delivery openings, mapped around your next move.</strong>
             </div>
-          </Reveal>
+          </div>
 
-          <div className="w2w-route-board__cards">
-            <Reveal className="w2w-route-card w2w-route-card--roles" delay={0.1}>
-              <span className="w2w-route-card__step">01</span>
-              <h3>Choose your lane</h3>
-              <p>Jump into the job type that matches your vehicle, schedule, or CDL experience.</p>
-              <nav className="w2w-route-card__chips" aria-label="Driver job categories">
-                {roles.map((role) => (
-                  <Link href={CATEGORY_SEARCH_URLS[role.category]} key={role.label}>
-                    {role.label}
-                  </Link>
-                ))}
-              </nav>
-            </Reveal>
-
-            <Reveal className="w2w-route-card w2w-route-card--market" delay={0.16}>
-              <span className="w2w-route-card__step">02</span>
-              <h3>Match roles to cities</h3>
-              <p>Pick a role, then choose from every active Wheels2Wages location. Each city opens that exact role search on Joblet.</p>
-
-              <div className="w2w-role-picker" aria-label="Choose a driver role">
-                {roles.map((role) => (
-                  <Link
-                    className={role.category === activeRoleCategory ? 'is-active' : undefined}
-                    key={role.category}
-                    href={CATEGORY_SEARCH_URLS[role.category]}
-                    onClick={() => setActiveRoleCategory(role.category)}
-                  >
-                    {role.label}
-                  </Link>
-                ))}
+          <div className="w2w-process-panel">
+            <div className="w2w-process-step">
+              <span className="w2w-process-step__num">01</span>
+              <div className="w2w-process-step__body">
+                <h3>Choose your lane</h3>
+                <p>Jump into the job type that matches your vehicle, schedule, or CDL experience.</p>
+                <nav className="w2w-route-card__chips" aria-label="Driver job categories">
+                  {roles.map((role) => (
+                    <Link href={CATEGORY_SEARCH_URLS[role.category]} key={role.label}>
+                      {role.label}
+                    </Link>
+                  ))}
+                </nav>
               </div>
+            </div>
 
-              <label className="w2w-market-search" htmlFor="w2w-market-search">
-                <Search aria-hidden />
-                <input
-                  id="w2w-market-search"
-                  value={marketQuery}
-                  onChange={(event) => setMarketQuery(event.target.value)}
-                  placeholder="Search a location..."
-                  type="search"
-                />
-              </label>
+            <div className="w2w-process-step">
+              <span className="w2w-process-step__num">02</span>
+              <div className="w2w-process-step__body">
+                <h3>Match roles to cities</h3>
+                <p>Pick a role, then choose from every active Wheels2Wages location. Each city opens that exact role search on Joblet.</p>
 
-              <div className="w2w-role-location-board">
-                <div className="w2w-role-location-board__header">
-                  <span>Available locations</span>
-                  <Link href={CATEGORY_SEARCH_URLS[activeRole.category]}>
-                    All {activeRole.label} jobs <ArrowUpRight aria-hidden />
-                  </Link>
+                <div className="w2w-role-picker" aria-label="Choose a driver role">
+                  {roles.map((role) => (
+                    <Link
+                      className={role.category === activeRoleCategory ? 'is-active' : undefined}
+                      key={role.category}
+                      href={CATEGORY_SEARCH_URLS[role.category]}
+                      onClick={() => setActiveRoleCategory(role.category)}
+                    >
+                      {role.label}
+                    </Link>
+                  ))}
                 </div>
 
-                {visibleLocations.length > 0 ? (
-                  <>
-                    <div className="w2w-role-location-grid" aria-label={`${activeRole.label} jobs by location`}>
-                      {visibleLocations.map((city) => (
-                        <Link
-                          href={buildJobletSearchUrl({ category: activeRole.category, location: city.value })}
-                          key={`${activeRole.category}-${city.value}`}
-                        >
-                          <span><MapPin aria-hidden /> {city.label}</span>
-                          <strong>{activeRole.label} roles</strong>
-                          <ArrowUpRight aria-hidden />
-                        </Link>
-                      ))}
-                    </div>
-                    {hiddenLocationCount > 0 && (
-                      <button
-                        type="button"
-                        className="w2w-market-show-all"
-                        onClick={() => setShowAllLocations(true)}
-                      >
-                        Show all {locationMatches.length} locations
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <p className="w2w-market-empty">No matching locations yet. Clear the search to see every city.</p>
-                )}
-              </div>
-            </Reveal>
+                <label className="w2w-market-search" htmlFor="w2w-market-search">
+                  <Search aria-hidden />
+                  <input
+                    id="w2w-market-search"
+                    value={marketQuery}
+                    onChange={(event) => setMarketQuery(event.target.value)}
+                    placeholder="Search a location..."
+                    type="search"
+                  />
+                </label>
 
-            <Reveal className="w2w-route-card w2w-route-card--apply" delay={0.22}>
-              <span className="w2w-route-card__step">03</span>
-              <h3>Apply when it fits</h3>
-              <p>Review the role, confirm the requirements, and continue free. No applicant fees.</p>
-              <ol>
-                <li><Check aria-hidden /> Explore the opening</li>
-                <li><Check aria-hidden /> Review what it needs</li>
-                <li><Check aria-hidden /> Go to the application</li>
-              </ol>
-              <Link className="w2w-route-card__cta" href={BROWSE_JOBS_URL}>
-                Browse open jobs <ArrowUpRight aria-hidden />
-              </Link>
-            </Reveal>
+                <div className="w2w-role-location-board">
+                  <div className="w2w-role-location-board__header">
+                    <span>Available locations</span>
+                    <Link href={CATEGORY_SEARCH_URLS[activeRole.category]}>
+                      All {activeRole.label} jobs <ArrowUpRight aria-hidden />
+                    </Link>
+                  </div>
+
+                  {visibleLocations.length > 0 ? (
+                    <>
+                      <div
+                        className="w2w-role-location-grid"
+                        id="w2w-location-results"
+                        aria-label={`${activeRole.label} jobs by location`}
+                      >
+                        {visibleLocations.map((city) => (
+                          <Link
+                            href={buildJobletSearchUrl({ category: activeRole.category, location: city.value })}
+                            key={`${activeRole.category}-${city.value}`}
+                          >
+                            <span><MapPin aria-hidden /> {city.label}</span>
+                            <strong>{activeRole.label} roles</strong>
+                            <ArrowUpRight aria-hidden />
+                          </Link>
+                        ))}
+                      </div>
+                      {hiddenLocationCount > 0 && (
+                        <button
+                          type="button"
+                          className="w2w-market-show-all"
+                          aria-expanded={showAllLocations}
+                          aria-controls="w2w-location-results"
+                          onClick={() => setShowAllLocations(true)}
+                        >
+                          Show all {locationMatches.length} locations
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <p className="w2w-market-empty">No matching locations yet. Clear the search to see every city.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="w2w-process-step">
+              <span className="w2w-process-step__num">03</span>
+              <div className="w2w-process-step__body">
+                <h3>Apply when it fits</h3>
+                <p>Review the role, confirm the requirements, and continue free. No applicant fees.</p>
+                <ol>
+                  <li><Check aria-hidden /> Explore the opening</li>
+                  <li><Check aria-hidden /> Review what it needs</li>
+                  <li><Check aria-hidden /> Go to the application</li>
+                </ol>
+                <Link className="w2w-route-card__cta" href={BROWSE_JOBS_URL}>
+                  Browse open jobs <ArrowUpRight aria-hidden />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -236,11 +203,11 @@ function HumanManifesto() {
         <span>Not the other way around</span>
       </div>
       <div className="w2w-story-shell w2w-manifesto__grid">
-        <Reveal>
+        <div>
           <span className="w2w-story-kicker">Why Wheels2Wages</span>
           <h2 id="manifesto-title">A clearer search. A more human next step.</h2>
-        </Reveal>
-        <Reveal className="w2w-manifesto__copy" delay={0.08}>
+        </div>
+        <div className="w2w-manifesto__copy">
           <p>
             Looking for work already takes energy. The website should not make
             it harder. Wheels2Wages keeps the route direct: the work, the place,
@@ -250,7 +217,7 @@ function HumanManifesto() {
             <div><dt>$0</dt><dd>fees charged to applicants</dd></div>
             <div><dt>3</dt><dd>clear steps from search to apply</dd></div>
           </dl>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -259,7 +226,6 @@ function HumanManifesto() {
 function FinalChapter() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const reduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
   const mounted = useMounted();
   // FAQ #1 opens by default (openIndex starts at 0), and Framer Motion
   // would otherwise bake that answer's *collapsed* {height:0, opacity:0}
@@ -273,10 +239,10 @@ function FinalChapter() {
     <section className="w2w-final-chapter" id="faq" aria-labelledby="final-title">
       <div className="w2w-story-shell w2w-final-chapter__grid">
         <div className="w2w-final-chapter__intro">
-          <Reveal>
+          <div>
             <span className="w2w-story-kicker">Before you apply</span>
             <h2 id="final-title">What drivers usually ask us.</h2>
-          </Reveal>
+          </div>
 
           <div className="w2w-final-chapter__questions">
             {FAQS.slice(0, 4).map((faq, index) => {
@@ -317,17 +283,27 @@ function FinalChapter() {
         <aside className="w2w-final-chapter__cta">
           <div className="w2w-final-chapter__route" aria-hidden>
             <span>You</span>
-            <i><motion.span className="w2w-final-chapter__vehicle" animate={reduceMotion || isMobile ? undefined : { left: ['0%', '92%', '92%', '0%'] }} transition={{ duration: 6.5, times: [0, 0.46, 0.7, 1], repeat: Infinity, ease: 'easeInOut' }}><Car aria-hidden /></motion.span></i>
+            <i>
+              <motion.span
+                className="w2w-final-chapter__vehicle"
+                initial={reduceMotion ? false : { left: '0%' }}
+                whileInView={reduceMotion ? undefined : { left: '92%' }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Car aria-hidden />
+              </motion.span>
+            </i>
             <span>Work</span>
           </div>
-          <Reveal>
+          <div>
             <span className="w2w-story-kicker">Start where you are</span>
             <h2>Find work that fits the way you move.</h2>
             <p>Browse current openings by job type and city, then apply when a role feels right for you.</p>
             <div className="w2w-final-chapter__actions">
               <Link href={BROWSE_JOBS_URL}>Find jobs near me <ArrowUpRight aria-hidden /></Link>
             </div>
-          </Reveal>
+          </div>
         </aside>
       </div>
     </section>
@@ -338,6 +314,7 @@ export function WheelsHomeStory() {
   return (
     <>
       <RouteJourney />
+      <FindJobsCta />
       <HumanManifesto />
       <FinalChapter />
     </>

@@ -32,14 +32,6 @@ export function Navbar() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // A plain window event rather than prop-drilling or context — the sticky
-  // mobile CTA (a sibling under layout.tsx, not a descendant) needs to know
-  // the drawer is open so it can hide itself; this is the simplest link
-  // between two components with no shared parent to lift state into.
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent('w2w:menu-toggle', { detail: open }));
-  }, [open]);
-
   // Lock page scroll behind the open drawer, move focus in, and return it
   // to the trigger on close.
   useEffect(() => {

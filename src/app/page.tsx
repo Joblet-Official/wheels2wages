@@ -6,7 +6,6 @@ export default function Home() {
     <>
       <Hero />
       <WheelsHomeStory />
-      <div className="h-20 md:hidden" aria-hidden />
     </>
   );
 }

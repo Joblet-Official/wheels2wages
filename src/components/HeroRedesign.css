@@ -12,7 +12,7 @@
   inset: 84px 18px 18px;
   margin: 0;
   overflow: hidden;
-  background: #173b78;
+  background: var(--w2w-navy);
 }
 
 .w2w-film-hero__photo > div:first-child {
@@ -119,7 +119,7 @@
 .w2w-film-hero h1 {
   margin: 0;
   font-size: clamp(4.7rem, 8.1vw, 9.5rem);
-  font-weight: 620;
+  font-weight: 780;
   line-height: 0.83;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -158,22 +158,24 @@
   align-items: center;
   gap: 16px;
   padding: 0 23px;
-  color: #173b78;
-  font-size: 0.81rem;
-  font-weight: 760;
+  color: var(--w2w-navy);
+  font-size: 0.9rem;
+  font-weight: 650;
   text-decoration: none;
   background: #ffffff;
-  border-radius: 999px;
+  border-radius: 12px;
   transition:
-    color 240ms ease,
-    background 240ms ease,
-    transform 240ms ease;
+    color 200ms ease,
+    background 200ms ease,
+    transform 200ms ease;
 }
 
-.w2w-film-hero__content aside > a:hover {
+.w2w-film-hero__content aside > a:hover,
+.w2w-film-hero__content aside > a:focus-visible {
   color: #ffffff;
-  background: #1d4ed8;
-  transform: translateY(-3px);
+  background: var(--w2w-blue);
+  outline: none;
+  transform: translateY(-2px);
 }
 
 .w2w-film-hero__content aside > a svg {
@@ -242,23 +244,16 @@
   }
 
   .w2w-film-hero__topline > span {
-    font-size: 0.64rem;
+    /* Kept at/above the 11px mobile eyebrow minimum. */
+    font-size: 0.72rem;
   }
 
-  /* The 5 pills are wider than a 375px screen, so this row always
-     scrolls at mobile widths — the fade on the right edge signals "more
-     to swipe to" instead of reading as an accidental cutoff. */
+  /* The 5 pills are wider than a 375px screen — wrap into two clean rows
+     instead of a horizontal scroll strip, so every label (including "Gig
+     work") stays completely readable with nothing clipped or faded. */
   .w2w-film-hero__topline nav {
-    gap: 10px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-    -webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
-    mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
-  }
-
-  .w2w-film-hero__topline nav::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .w2w-film-hero__topline nav a {
@@ -273,7 +268,7 @@
     inset: auto;
     display: block;
     padding: 28px 20px 44px;
-    background: #0f1e3e;
+    background: var(--w2w-navy);
   }
 
   .w2w-film-hero h1 {
@@ -390,6 +385,6 @@
 .w2w-film-hero__topline nav a:hover,
 .w2w-film-hero__topline nav a:focus-visible {
   background: #ffffff;
-  color: #173b78;
+  color: var(--w2w-navy);
   outline: none;
 }

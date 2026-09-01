@@ -102,16 +102,6 @@ const config: Config = {
       letterSpacing: {
         display: '-0.03em',
       },
-      boxShadow: {
-        card: '0 1px 2px rgba(10,10,11,0.04), 0 6px 16px -8px rgba(10,10,11,0.08)',
-        'card-lg': '0 4px 8px rgba(10,10,11,0.04), 0 20px 44px -16px rgba(10,10,11,0.14)',
-        // Elevated panel — for surfaces that sit above a section transition
-        // (the jobs panel overlapping the Hero, the search panel).
-        panel: '0 2px 6px rgba(10,17,31,0.06), 0 28px 60px -24px rgba(10,17,31,0.22)',
-        // Soft glow for primary CTAs — used by Button.tsx and StickyMobileCTA.tsx.
-        glow: '0 10px 32px -8px rgba(37,99,235,0.45)',
-        'glow-soft': '0 8px 24px -8px rgba(37,99,235,0.25)',
-      },
     },
   },
   plugins: [],
