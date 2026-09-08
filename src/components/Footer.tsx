@@ -1,4 +1,5 @@
 import { ArrowUpRight, Mail } from 'lucide-react';
+import { Button } from './Button';
 import { Logo } from './Logo';
 import { BROWSE_JOBS_URL, CATEGORY_SEARCH_URLS, CITIES, SITE, buildJobsUrl } from '@/lib/constants';
 import './Footer.css';
@@ -42,9 +43,9 @@ export function Footer() {
 
         <div className="w2w-site-footer__statement">
           <h2>Work that moves<br />with your life.</h2>
-          <a href={BROWSE_JOBS_URL} target="_blank" rel="noopener noreferrer">
-            Browse open jobs <ArrowUpRight aria-hidden />
-          </a>
+          <Button href={BROWSE_JOBS_URL} external variant="primary" size="lg">
+            Browse open jobs <ArrowUpRight className="h-4 w-4" aria-hidden />
+          </Button>
         </div>
 
         <div className="w2w-site-footer__links">

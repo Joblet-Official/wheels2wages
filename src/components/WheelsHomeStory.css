@@ -593,34 +593,6 @@
   color: var(--w2w-route);
 }
 
-.w2w-route-card__cta {
-  display: inline-flex;
-  min-height: 46px;
-  align-items: center;
-  gap: 10px;
-  margin-top: 22px;
-  padding: 0 18px;
-  color: var(--w2w-navy);
-  background: #ffffff;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 650;
-  text-decoration: none;
-  transition: transform 160ms ease, background 160ms ease;
-}
-
-.w2w-route-card__cta:hover,
-.w2w-route-card__cta:focus-visible {
-  color: #ffffff;
-  background: var(--w2w-blue);
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.w2w-route-card__cta svg {
-  width: 16px;
-}
-
 @media (max-width: 980px) {
   .w2w-route-board__intro,
   .w2w-route-board__grid {

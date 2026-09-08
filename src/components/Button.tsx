@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'dark';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'dark' | 'inverse';
 type Size = 'sm' | 'md' | 'lg';
 
 const base =
@@ -18,6 +18,10 @@ const variants: Record<Variant, string> = {
     'text-ink-900 hover:bg-ink-100',
   dark:
     'bg-ink-900 text-white hover:bg-ink-800',
+  // White pill for use on dark/navy section backgrounds (hero, route cards),
+  // flips to the primary brand blue on hover/focus.
+  inverse:
+    'bg-white text-navy-900 hover:bg-electric-600 hover:text-white active:bg-electric-700 focus-visible:ring-offset-navy-900',
 };
 
 const sizes: Record<Size, string> = {

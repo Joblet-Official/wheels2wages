@@ -10,6 +10,7 @@ import {
 import { ArrowUpRight, Car, Check, MapPin, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { BROWSE_JOBS_URL, buildJobletSearchUrl, CATEGORY_SEARCH_URLS, CITIES, FAQS } from '@/lib/constants';
+import { Button } from './Button';
 import { FindJobsCta } from './StickyMobileCTA';
 import './WheelsHomeStory.css';
 
@@ -182,9 +183,9 @@ function RouteJourney() {
                   <li><Check aria-hidden /> Review what it needs</li>
                   <li><Check aria-hidden /> Go to the application</li>
                 </ol>
-                <Link className="w2w-route-card__cta" href={BROWSE_JOBS_URL}>
-                  Browse open jobs <ArrowUpRight aria-hidden />
-                </Link>
+                <Button href={BROWSE_JOBS_URL} variant="inverse" size="md" className="mt-[22px]">
+                  Browse open jobs <ArrowUpRight className="h-4 w-4" aria-hidden />
+                </Button>
               </div>
             </div>
           </div>
