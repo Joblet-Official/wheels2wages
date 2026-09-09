@@ -11,6 +11,7 @@ import {
 } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { BROWSE_JOBS_URL, CATEGORY_SEARCH_URLS } from '@/lib/constants';
+import { Button } from './Button';
 import './HeroRedesign.css';
 
 const jobTypes = [
@@ -150,9 +151,9 @@ export function HeroRedesign() {
             Real driving and delivery opportunities, organized around the work
             you want and the places you know.
           </p>
-          <Link href={BROWSE_JOBS_URL}>
-            Browse open jobs <ArrowUpRight aria-hidden />
-          </Link>
+          <Button href={BROWSE_JOBS_URL} variant="inverse" size="lg">
+            Browse open jobs <ArrowUpRight className="h-4 w-4" aria-hidden />
+          </Button>
           <div className="w2w-film-hero__quick-links" aria-label="Quick job searches">
             {jobTypes.map((job) => (
               <Link href={CATEGORY_SEARCH_URLS[job.category]} key={job.label}>

@@ -152,36 +152,6 @@
   line-height: 1.62;
 }
 
-.w2w-film-hero__content aside > a {
-  display: inline-flex;
-  min-height: 56px;
-  align-items: center;
-  gap: 16px;
-  padding: 0 23px;
-  color: var(--w2w-navy);
-  font-size: 0.9rem;
-  font-weight: 650;
-  text-decoration: none;
-  background: #ffffff;
-  border-radius: 12px;
-  transition:
-    color 200ms ease,
-    background 200ms ease,
-    transform 200ms ease;
-}
-
-.w2w-film-hero__content aside > a:hover,
-.w2w-film-hero__content aside > a:focus-visible {
-  color: #ffffff;
-  background: var(--w2w-blue);
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.w2w-film-hero__content aside > a svg {
-  width: 17px;
-}
-
 .w2w-film-hero__content aside small {
   display: block;
   margin-top: 16px;
@@ -290,8 +260,7 @@
     font-size: 1rem;
   }
 
-  .w2w-film-hero__content aside > a {
-    min-height: 52px;
+  .w2w-film-hero__content aside > :where(a, button) {
     width: 100%;
   }
 

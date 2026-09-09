@@ -112,35 +112,6 @@
   letter-spacing: -0.04em;
 }
 
-.w2w-site-footer__statement > a {
-  display: inline-flex;
-  min-height: 56px;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 8px;
-  padding: 0 26px;
-  color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 650;
-  text-decoration: none;
-  background: var(--w2w-blue);
-  border-radius: 12px;
-  transition:
-    background 200ms ease,
-    transform 200ms ease;
-}
-
-.w2w-site-footer__statement > a:hover,
-.w2w-site-footer__statement > a:focus-visible {
-  background: var(--w2w-blue-hover);
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.w2w-site-footer__statement svg {
-  width: 18px;
-}
-
 .w2w-site-footer__links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
