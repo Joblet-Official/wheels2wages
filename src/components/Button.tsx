@@ -64,7 +64,13 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, Props>(
 
     const inner = (
       <>
-        <span>{children}</span>
+        {/* inline-flex, not a plain span: Tailwind Preflight sets
+            `svg { display: block }`, and as a blockified flex item a plain
+            span would push any icon passed inline in `children` (e.g.
+            "Browse open jobs <ArrowUpRight/>") onto its own line. Laying the
+            label and icon out as a centered flex row keeps them beside each
+            other. Single text children are unaffected. */}
+        <span className="inline-flex items-center gap-2">{children}</span>
         {withArrow && (
           <ArrowRight
             className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
