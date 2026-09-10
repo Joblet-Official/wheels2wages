@@ -493,6 +493,11 @@
 
 .w2w-route-board__visual-overlay strong {
   max-width: 18ch;
+  /* Explicit white: this overlay sits on the photo's dark gradient bottom
+     regardless of the section theme. It used to inherit the section's white
+     text; now the section is light, so it must set its own color or it
+     turns dark-on-dark and vanishes. */
+  color: #ffffff;
   font-size: clamp(1.7rem, 3.2vw, 3.4rem);
   font-weight: 700;
   line-height: 0.98;
