@@ -34,7 +34,12 @@
      photo (the truck cab) wash them out. */
   background:
     linear-gradient(180deg, rgba(3, 18, 47, 0.56) 0%, transparent 32%, rgba(2, 15, 40, 0.82) 100%),
-    linear-gradient(90deg, rgba(4, 22, 55, 0.4) 0%, transparent 58%);
+    /* Darken BOTH edges, not just the left. The headline sits on the left and
+       the body paragraph + CTA sit on the right column — the old
+       `transparent 58%` left that right column on bare photo (the bright
+       truck cabs), washing the copy out. Center stays clearest so the
+       walking-driver focal point still reads. */
+    linear-gradient(90deg, rgba(4, 22, 55, 0.46) 0%, transparent 42%, rgba(4, 22, 55, 0.52) 100%);
 }
 
 .w2w-film-hero__grain {
@@ -118,9 +123,11 @@
 
 .w2w-film-hero h1 {
   margin: 0;
-  font-size: clamp(4.7rem, 8.1vw, 9.5rem);
+  font-size: clamp(4.2rem, 7.4vw, 8rem);
   font-weight: 780;
-  line-height: 0.83;
+  /* 0.83 read as a poster/template lockup rather than a product headline —
+     0.92 keeps it tight and confident without the "AI hero" fingerprint. */
+  line-height: 0.92;
   letter-spacing: -0.04em;
   text-wrap: balance;
 }
