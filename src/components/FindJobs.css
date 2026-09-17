@@ -1,0 +1,269 @@
+/* Find Jobs page. Reuses the site's design tokens (globals.css) and mirrors
+   the existing section rhythm: a navy intro band (like the Hero / route
+   board / final chapter) over a light listing surface, with cards that use
+   the same white-surface-and-border language as the "Match roles to cities"
+   location cards in WheelsHomeStory.css. */
+
+.w2w-jobs-hero {
+  position: relative;
+  padding: calc(84px + clamp(48px, 7vw, 96px)) 0 clamp(48px, 6vw, 80px);
+  color: #ffffff;
+  background: var(--w2w-navy);
+}
+
+.w2w-jobs-shell {
+  width: min(1240px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+/* Self-contained kicker (the shared .w2w-story-kicker lives in
+   WheelsHomeStory.css, which this page does not load). */
+.w2w-jobs-kicker {
+  display: inline-flex;
+  align-items: center;
+  color: var(--w2w-route);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.w2w-jobs-kicker::before {
+  width: 6px;
+  height: 6px;
+  margin-right: 12px;
+  background: currentColor;
+  border-radius: 1px;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.w2w-jobs-hero h1 {
+  max-width: 640px;
+  margin: 18px 0 0;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 780;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.w2w-jobs-hero p {
+  max-width: 520px;
+  margin: 18px 0 0;
+  color: rgba(239, 246, 255, 0.78);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.65;
+}
+
+/* Listing surface */
+.w2w-jobs-list {
+  padding: clamp(48px, 6vw, 84px) 0 clamp(72px, 9vw, 120px);
+  background: var(--w2w-canvas);
+}
+
+.w2w-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 16px;
+}
+
+.w2w-job-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 22px 20px;
+  color: var(--w2w-text);
+  background: var(--w2w-surface);
+  border: 1px solid var(--w2w-border);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.w2w-job-card:hover,
+.w2w-job-card:focus-visible {
+  border-color: var(--w2w-blue);
+  outline: none;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px -24px rgba(15, 35, 75, 0.45);
+}
+
+.w2w-job-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.w2w-job-card__company {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: var(--w2w-text-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.w2w-job-card__company svg {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: var(--w2w-blue);
+}
+
+.w2w-job-card__category {
+  padding: 0.28rem 0.6rem;
+  color: var(--w2w-blue-hover);
+  background: #eff4ff; /* electric-50 */
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.w2w-job-card__title {
+  margin: 2px 0 0;
+  font-size: 1.16rem;
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+}
+
+.w2w-job-card__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--w2w-text-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.w2w-job-card__location svg {
+  width: 15px;
+  height: 15px;
+  color: var(--w2w-blue);
+}
+
+.w2w-job-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--w2w-border);
+}
+
+.w2w-job-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--w2w-blue);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.w2w-job-card__cta svg {
+  width: 15px;
+  height: 15px;
+}
+
+.w2w-job-card__posted {
+  color: var(--w2w-text-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* Pagination — same pill language as the role/location chips elsewhere. */
+.w2w-jobs-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.w2w-jobs-pagination a,
+.w2w-jobs-pagination > span {
+  display: inline-flex;
+  min-width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.w2w-jobs-pagination a {
+  color: var(--w2w-blue-hover);
+  background: var(--w2w-surface);
+  border: 1px solid var(--w2w-border);
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.w2w-jobs-pagination a:hover,
+.w2w-jobs-pagination a:focus-visible {
+  color: #ffffff;
+  background: var(--w2w-blue);
+  border-color: var(--w2w-blue);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.w2w-jobs-pagination [aria-current='page'] {
+  color: #ffffff;
+  background: var(--w2w-blue);
+  border: 1px solid var(--w2w-blue);
+}
+
+.w2w-jobs-pagination__gap {
+  min-width: auto;
+  color: var(--w2w-text-muted);
+}
+
+.w2w-jobs-pagination__nav svg {
+  width: 18px;
+  height: 18px;
+}
+
+.w2w-jobs-pagination__nav--disabled {
+  color: var(--w2w-text-muted);
+  background: var(--w2w-surface);
+  border: 1px solid var(--w2w-border);
+  opacity: 0.45;
+}
+
+/* Empty state (feed unavailable) */
+.w2w-jobs-empty {
+  padding: 40px 24px;
+  color: var(--w2w-text-muted);
+  text-align: center;
+  background: var(--w2w-surface);
+  border: 1px dashed var(--w2w-border);
+  border-radius: 14px;
+}
+
+.w2w-jobs-empty a {
+  color: var(--w2w-blue);
+  font-weight: 650;
+}
+
+@media (max-width: 620px) {
+  .w2w-jobs-shell {
+    width: calc(100% - 36px);
+  }
+
+  .w2w-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+}

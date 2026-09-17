@@ -12,11 +12,13 @@ const roleLinks = [
   { label: 'Flexible gig work', category: 'gig' },
 ] as const;
 
+// Home-anchored (`/#id`) so they resolve from sub-routes like /find-jobs too;
+// on the homepage a same-path hash change is still an in-page jump.
 const pageLinks = [
-  { label: 'Browse jobs', href: '#jobs' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'Questions', href: '#faq' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Find jobs', href: '/find-jobs' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'Questions', href: '/#faq' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export function Footer() {

@@ -250,11 +250,15 @@ export function buildJobletSearchUrl(extra?: {
 
 // Anchors must match the real section ids in HeroRedesign.tsx (#jobs) and
 // WheelsHomeStory.tsx (#how-it-works, #faq) plus Footer.tsx (#contact).
+// Home-anchored form (`/#id`, not bare `#id`) so these still resolve from
+// sub-routes like /find-jobs — on the homepage a same-path hash change is
+// treated as an in-page jump, so nothing regresses there. "Find jobs" is a
+// real page (src/app/find-jobs), not an anchor.
 export const NAV_LINKS = [
-  { label: 'Jobs', href: '#jobs' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Find jobs', href: '/find-jobs' },
+  { label: 'How it works', href: '/#how-it-works' },
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const FAQS = [
