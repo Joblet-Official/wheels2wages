@@ -87,7 +87,9 @@ export default async function FindJobsPage({ searchParams }: FindJobsPageProps) 
                   return (
                     <a
                       key={job.id}
-                      className="w2w-job-card"
+                      className={
+                        job.featured ? 'w2w-job-card w2w-job-card--featured' : 'w2w-job-card'
+                      }
                       href={job.url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -97,6 +99,9 @@ export default async function FindJobsPage({ searchParams }: FindJobsPageProps) 
                           <Building2 aria-hidden />
                           {job.company || 'Employer'}
                         </span>
+                        {job.featured && (
+                          <span className="w2w-job-card__featured">Featured</span>
+                        )}
                         {job.category && (
                           <span className="w2w-job-card__category">{job.category}</span>
                         )}
