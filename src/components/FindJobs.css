@@ -89,6 +89,21 @@
   box-shadow: 0 18px 40px -24px rgba(15, 35, 75, 0.45);
 }
 
+.w2w-job-card--featured {
+  border-color: var(--w2w-blue);
+  box-shadow: 0 0 0 1px var(--w2w-blue);
+}
+
+.w2w-job-card__featured {
+  padding: 0.28rem 0.6rem;
+  color: #ffffff;
+  background: var(--w2w-blue);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
 .w2w-job-card__top {
   display: flex;
   flex-wrap: wrap;
